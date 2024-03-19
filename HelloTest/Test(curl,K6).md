@@ -4,4 +4,4 @@
 > 맥OS,리눅스는 운영체제에 내장되어 있어 명령어를 통해 사용 가능합니다
 
 1. hello.js 실행 
-2. 터미널 실행후 curl (ip):(port) -> localhost:8000 명령어 입력  
+2. 터미널 실행후 curl (ip):(port) -> localhost:8000 명령어 입력
