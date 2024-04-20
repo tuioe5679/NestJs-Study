@@ -92,3 +92,31 @@ if(path == "/user"){
 > 한글을 출력값으로 사용하면 한글이 깨지게 됩니다 이럴경우 charset 설정을 해줘야 합니다 <br>
 > setHeader()의 인자값을 수정해줍니다 <br>
 > ``` res.setHeader("Content-Type","text/html; charset=utf-8"); ```
+
+### 라우터 리팩터링
+
+모든 요청의 path 값을 분석하여 함수를 실행합니다 <br>
+이러한 요청의 양이 많아진다면 유지보수하기가 힘들어 지기 때문에 유지 보수 측면의 리팩터링을 진행합니다 
+
+1. 매개변수가 같은 패턴으로 사용되기 때문에 각 path에 맞는 함수 이름을 넣은 urlMap을 선언 하여 사용합니다 
+```
+const urlMap = {
+    "/": (req,res) => res.end("HOME"),
+    "/user": user,
+    "/feed": feed,
+};
+```
+2. 맵을 적용시켜 분기문 간략화  
+
+```
+if(path in urlMap){
+    urlMap[path](req,res)   // urlMap에 path 가 있는지 확인 
+}else{
+    notFound(req,res);
+}
+```
+> 객체와 함께 in 연산자를 사용하면 객체의 키가 있는지 검사합니다 
+```(찾을키) in (객체)```
+
+> urlMap[키] 키에 해당하는 값을 반환 
+```urlMap[user] -> user(req,res) ```

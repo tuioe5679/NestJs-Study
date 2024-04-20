@@ -4,11 +4,8 @@ const url = require("url");
 http.createServer((req,res) => {
     const path = url.parse(req.url,true).pathname;
     res.setHeader("Content-Type","text/html; charset=utf-8");
-
-    if(path == "/user"){
-        user(req,res);
-    }else if(path == "/list"){
-        list(req,res);
+    if(path in urlMap){
+        urlMap[path](req,res)   // urlMap에 path 가 있는지 확인 
     }else{
         notFound(req,res);
     }
@@ -18,7 +15,7 @@ const user = (req,res) => {
     res.end("[user] name: JS age: 0");
 };
 
-const list = (req,res) => {
+const feed = (req,res) => {
     res.end(`<ul>
     <li>리스트1</li>
     <li>list1</li>
@@ -29,4 +26,10 @@ const list = (req,res) => {
 const notFound = (req,res) => {
     res.statusCode = 404;
     res.end("404 page not found");
+};
+
+const urlMap = {
+    "/": (req,res) => res.end("HOME"),
+    "/user": user,
+    "/feed": feed,
 };
